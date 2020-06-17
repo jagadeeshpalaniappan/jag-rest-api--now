@@ -19,8 +19,5 @@
       "dest": "/index.js"
     }
   ],
-  "env": {
-    "VERSION": "@version",
-    "FAUNADB_SECRET": "@faunadb-secret"
-  }
+  "env": {}
 }
