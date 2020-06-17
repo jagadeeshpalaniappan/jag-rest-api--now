@@ -1,0 +1,26 @@
+{
+  "name": "jag-rest-api-test1",
+  "version": "0.1.0",
+  "description": "ExpressJS server Zeit Now v2",
+  "author": "Jagadeesh Palaniappan",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "deploy": "now && now alias",
+    "docker:info": "docker ps -a",
+    "docker:up": "docker-compose up -d && docker-compose logs -f",
+    "docker:up:clean": "docker-compose up --build -d && docker-compose logs -f",
+    "docker:down": "docker-compose down",
+    "docker:nuke": "npm run docker:nuke:containers && docker rmi -f $(docker images -q)",
+    "docker:nuke:containers": "docker rm $(docker ps -aq)",
+    "docker:refresh": "npm run docker:down && npm run docker:up",
+    "docker:refresh:clean": "npm run docker:down && npm run docker:up:clean",
+    "zeit:deployments:list": "now ls jag-rest-api-test1",
+    "zeit:deployments:purge": "now rm jag-rest-api-test1 --safe --yes"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  }
+}

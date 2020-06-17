@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "name": "jag-rest-api-test1",
+  "alias": "jag-rest-api-test1.now.sh",
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+      },
+      "src": "/.*",
+      "dest": "/index.js"
+    }
+  ],
+  "env": {
+    "VERSION": "@version",
+    "FAUNADB_SECRET": "@faunadb-secret"
+  }
+}
