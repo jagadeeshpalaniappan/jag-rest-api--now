@@ -3,8 +3,8 @@
 var router = require("express").Router();
 const { check, validationResult } = require("express-validator");
 
-const userService = require("../modules/user/user.service");
-const { arrToMap } = require("../modules/common/utils/all.utils");
+const userService = require("../../../../modules/user/user.service");
+const { arrToMap } = require("../../../../modules/common/utils/all.utils");
 
 const SEARCH_TERMS = ["fuzzySearch", "role", "sex", "isActive"];
 
