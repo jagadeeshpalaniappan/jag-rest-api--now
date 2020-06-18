@@ -1,9 +1,4 @@
-let { gql } = require("apollo-server-express");
-
-// common:
 const commonResolvers = require("./common");
-
-// user:
 const userResolvers = require("./user");
 
 const resolvers = {
@@ -13,8 +8,8 @@ const resolvers = {
     ...userResolvers.Query,
   },
   Mutation: {
-    // ...commonResolvers.Mutation,
-    // ...userResolvers.Mutation,
+    ...commonResolvers.Mutation,
+    ...userResolvers.Mutation,
   },
   // User: userResolvers.User,
 };

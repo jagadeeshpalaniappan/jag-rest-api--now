@@ -5,6 +5,11 @@ const typeDefs = gql`
     id: ID
     name: String
     email: String
+    username: String
+    phone: String
+    sex: String
+    role: String
+    isActive: Boolean
     # posts: [Post]
     # todos: [Todo]
     # posts(options: PostsPageQueryOptions): PostsPage # TODO: facing problem in filtering and applying criteria
@@ -14,11 +19,21 @@ const typeDefs = gql`
   input CreateUserInput {
     name: String!
     email: String!
+    username: String!
+    phone: String
+    sex: String
+    role: String
+    isActive: Boolean
   }
 
   input UpdateUserInput {
-    name: String!
-    email: String!
+    name: String
+    email: String
+    username: String
+    phone: String
+    sex: String
+    role: String
+    isActive: Boolean
   }
 
   type UsersPage {

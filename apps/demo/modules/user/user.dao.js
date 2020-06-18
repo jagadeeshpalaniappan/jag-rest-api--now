@@ -68,6 +68,7 @@ const getUser = async ({ id }) => {
 };
 
 const createUser = async ({ user }) => {
+  console.log("DAO: createUsers: ", { user });
   const createDocQuery = q.Create(q.Collection(COLLECTION_NAME), {
     data: user,
   }); // getCollectionRef and CreateDoc(collectionRef, newDoc)
@@ -76,6 +77,8 @@ const createUser = async ({ user }) => {
 };
 
 const createUsers = async ({ users }) => {
+  console.log("DAO: createUsers: ", { users });
+
   const createDocsQuery = q.Map(
     users,
     q.Lambda(

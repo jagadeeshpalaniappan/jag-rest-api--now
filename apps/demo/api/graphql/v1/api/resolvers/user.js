@@ -35,23 +35,27 @@ function user(root, args, session) {
 }
 
 function createUser(root, args, session) {
-  // console.log("createUser:", args);
-  const { name, email } = args.input;
-  const user = { name: xss(name), email: xss(email) };
-  let required = ["name", "email"];
+  console.log("createUser:", args);
+  // const { name, email } = args.input;
+  // const user = { name: xss(name), email: xss(email) };
+  // let required = ["name", "email"];
   // validateFields(user, required);
 
+  const user = args.input;
   return userService.createUser({ user });
 }
 
 function updateUser(root, args, session) {
+  console.log("updateUser:", args);
   const { id } = args;
-  const { name, email } = args.input;
-  const user = {};
-  if (name) user.name = xss(name);
-  if (email) user.email = xss(email);
-  let required = ["name", "email"];
+  // const { name, email } = args.input;
+  // const user = {};
+  // if (name) user.name = xss(name);
+  // if (email) user.email = xss(email);
+  // let required = ["name", "email"];
   // validateFields(user, required);
+
+  const user = args.input;
   return userService.updateUser({ id, user });
 }
 
