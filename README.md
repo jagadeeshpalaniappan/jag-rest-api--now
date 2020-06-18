@@ -1,4 +1,6 @@
-# jag-rest-api
+# jag-api
+
+REST & GraphQL
 
 ```
 npm start
