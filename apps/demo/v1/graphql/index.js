@@ -19,7 +19,7 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: true,
+  introspection: true, // Remember: This will enable 'playground' in PROD
   playground: true,
 });
 server.applyMiddleware({ app: router, path: "/" });
