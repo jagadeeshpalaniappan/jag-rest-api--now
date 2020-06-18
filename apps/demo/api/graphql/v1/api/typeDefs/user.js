@@ -41,14 +41,21 @@ const typeDefs = gql`
     meta: PageMetadata
   }
 
-  input UsersPageQueryOptions {
+  input FilterOptions {
+    key: String
+    value: String
+  }
+
+  input UsersQueryOptions {
     pagination: PaginationOptions
-    # search: SearchOptions # TODO: implement search
+    search: String
+    sort: String
+    filters: [FilterOptions]
   }
 
   extend type Query {
     # users: [User] # **deprecated** (use with pagination)
-    users(options: UsersPageQueryOptions): UsersPage
+    users(options: UsersQueryOptions): UsersPage
     user(id: ID!): User
   }
 

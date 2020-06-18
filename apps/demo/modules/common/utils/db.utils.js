@@ -53,7 +53,7 @@ const getCursors = (pageObj) => {
 };
 
 const getPageConfig = (page) => {
-  const { size, before, after } = page;
+  const { size, before, after } = page || {};
   const pageConfig = {};
   if (size) pageConfig.size = size;
   if (before) pageConfig.before = decodeCursor(before);

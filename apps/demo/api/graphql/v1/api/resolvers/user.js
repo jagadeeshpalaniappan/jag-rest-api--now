@@ -1,5 +1,6 @@
 const xss = require("xss");
 const userService = require("../../../../../modules/user/user.service");
+const { arrToMap } = require("../../../../../modules/common/utils/all.utils");
 // const postDao = require("../post/userService");
 // const todoDao = require("../todo/userService");
 // const { validateFields } = require("../../utils/common");
@@ -11,22 +12,25 @@ function users(root, args, session) {
 */
 
 async function users(root, args, session) {
-  const { options } = args;
-  const { pagination } = options;
+  const { options } = args || {};
+  const { pagination, search, sort, filters } = options || {};
 
-  // const { data, cursor } = await userService.getLimitedUsers({
-  //   limit: pagination.limit,
-  //   cursor: pagination.cursor,
-  // });
+  console.log({ search, sort, pagination, filters });
 
-  // const totalCount = await userService.getUsersTotalCount();
-  // const meta = { totalCount, cursor };
+  const filterMap = filters ? arrToMap(filters) : {};
+  filterMap.fuzzySearch = search;
 
-  const data = {},
-    meta = {};
+  console.log({ filterMap });
 
-  // return: UsersPage
-  return { data, meta };
+  const { data, before, after } = await userService.getUsers({
+    search,
+    sort,
+    page: pagination,
+    filterMap,
+  });
+
+  console.log({ users });
+  return { data, meta: { before, after } }; //{ data: [1, 2], meta: [] };
 }
 
 function user(root, args, session) {

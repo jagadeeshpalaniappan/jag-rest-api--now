@@ -2,13 +2,15 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   input PaginationOptions {
-    limit: Int
-    cursor: String
+    size: Int
+    before: String
+    after: String
   }
 
   type PageMetadata {
-    totalCount: Int
-    cursor: String
+    totalSize: Int
+    before: String
+    after: String
   }
 `;
 
