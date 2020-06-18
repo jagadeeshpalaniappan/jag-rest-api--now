@@ -3,6 +3,11 @@
 var router = require("express").Router();
 const { ApolloServer, gql } = require("apollo-server-express");
 
+// api/products
+router.get("/gql", function (req, res) {
+  res.json({ users: [], query: req.query, version: 2 });
+});
+
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type Query {
