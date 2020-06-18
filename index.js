@@ -19,11 +19,8 @@ app.use(morgan("dev"));
 // API:
 app.use("/", require("./apps"));
 
-// LOCAL:
-if (process.env.MYAPP_ENV === "LOCAL") {
-  const port = process.env.PORT || 3333;
-  app.listen(port, (err) => {
-    if (err) throw err;
-    console.log(`> Running: http://localhost:${port}`);
-  });
-}
+const port = process.env.PORT || 3333;
+app.listen(port, (err) => {
+  if (err) throw err;
+  console.log(`> Running: http://localhost:${port}`);
+});
