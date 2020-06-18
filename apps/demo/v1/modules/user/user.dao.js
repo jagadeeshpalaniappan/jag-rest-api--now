@@ -49,7 +49,7 @@ const getUsersAdvFql = ({ sort, page, filterMap }) => {
 const getUsers = async ({ sort, page, filterMap }) => {
   const fql = getUsersAdvFql({ sort, page, filterMap });
   const pageObj = await db.query(fql);
-  console.log("getUsers: pageObj", pageObj);
+  // console.log("getUsers: pageObj", pageObj);
 
   // populate: resp
   const items = pageObj.data.map((user) => ({
@@ -58,13 +58,10 @@ const getUsers = async ({ sort, page, filterMap }) => {
   }));
 
   const { before, after } = getCursors(pageObj);
-  console.log({ before, after });
-
   return { data: items, before, after };
 };
 
 const getUser = async ({ id }) => {
-  console.log("DAO:getUser:", { id });
   const getUserByIdQuery = q.Get(q.Ref(q.Collection(COLLECTION_NAME), id)); // getCollectionRef and getDocRefById and GetDoc
   const dbUser = await db.query(getUserByIdQuery);
   return { id: getId(dbUser.ref), ...dbUser.data };

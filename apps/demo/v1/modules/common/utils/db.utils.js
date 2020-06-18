@@ -53,13 +53,13 @@ const encodeCursor = (cursor) => {
     if (typeof item === "object") return getCursorRef(item);
   });
 
-  console.log(JSON.stringify(items));
+  // console.log(JSON.stringify(items));
   return atob(JSON.stringify(items));
   // return cursor;
 };
 
 const decodeCursor = (cursor) => {
-  console.log("###decodeCursor###", JSON.stringify(cursor));
+  // console.log("###decodeCursor###", JSON.stringify(cursor));
   const cursorDecoded = JSON.parse(btoa(cursor));
   // console.log(cursorDecoded);
   const items = cursorDecoded.map((item) => {
