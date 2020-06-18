@@ -15,7 +15,7 @@ const INDEX_CONFIG = {
   sortIndex: {
     name: "users_idx_advsearch_sortby@name",
     username: "users_idx_advsearch_sortby@username",
-    created: "users_idx_advsearch_sortby@created",
+    updatedTs: "users_idx_advsearch_sortby@updatedTs",
   },
 };
 

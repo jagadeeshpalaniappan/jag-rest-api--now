@@ -25,7 +25,7 @@ const getUsersValidateMiddleware = [
     "",
     "name",
     "username",
-    "created",
+    "updatedTs",
   ]),
   check("pageSize").toInt(),
 ];

@@ -10,30 +10,6 @@ const getId = (ref) => {
   return refObj && refObj["@ref"] ? refObj["@ref"]["id"] : null;
 };
 
-const anyConfig = {
-  users: {
-    collection: "users",
-    defaultIndex: "users_idx_advsearch",
-    sortIndex: {
-      name: "users_idx_advsearch_sortby@name",
-      username: "users_idx_advsearch_sortby@username",
-      created: "users_idx_advsearch_sortby@created",
-    },
-
-    // defaultSearchIndex: "users_idx_searchable",
-    // searchAndSortIndex111: {
-    //   name: "users_idx_searchable_sortby@name",
-    //   username: "users_idx_searchable_sortby@username",
-    //   created: "users_idx_searchable_sortby@created",
-    // },
-    // searchAndSortIndex: {
-    //   name: "users_idx_advsearch_sortby@name",
-    //   username: "users_idx_advsearch_sortby@username",
-    //   created: "users_idx_advsearch_sortby@created",
-    // },
-  },
-};
-
 const getCursorRef = (ref) => {
   if (!ref) return null;
   const refObj = JSON.parse(JSON.stringify(ref));
@@ -49,8 +25,8 @@ const getCursorRef = (ref) => {
 const encodeCursor = (cursor) => {
   // console.log("###encodeCursor###", JSON.stringify(cursor));
   const items = cursor.map((item) => {
-    if (typeof item === "string" || item === null) return item;
-    if (typeof item === "object") return getCursorRef(item);
+    if (item && typeof item === "object") return getCursorRef(item);
+    return item;
   });
 
   // console.log(JSON.stringify(items));
@@ -59,13 +35,13 @@ const encodeCursor = (cursor) => {
 };
 
 const decodeCursor = (cursor) => {
-  // console.log("###decodeCursor###", JSON.stringify(cursor));
   const cursorDecoded = JSON.parse(btoa(cursor));
-  // console.log(cursorDecoded);
+  console.log("###decodeCursor###", cursorDecoded);
+
   const items = cursorDecoded.map((item) => {
-    if (typeof item === "string" || item === null) return item;
-    if (typeof item === "object" && item)
+    if (item && typeof item === "object")
       return q.Ref(q.Collection(item.collection), item.id);
+    return item;
   });
   return items;
 };
