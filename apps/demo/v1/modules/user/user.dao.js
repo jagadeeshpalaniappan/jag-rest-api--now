@@ -27,9 +27,8 @@ const getSearchValues = (filterMap) => {
   return SEARCH_TERMS.map((terms) => (filterMap && filterMap[terms]) || "*");
 };
 
-const getUsersAdvFql = ({ input }) => {
-  const { sort, filterMap } = input;
-  const pageConfig = getPageConfig({ input });
+const getUsersAdvFql = ({ sort, page, filterMap }) => {
+  const pageConfig = getPageConfig(page);
   const index = getIndexName(sort);
 
   // SEARCH_VAL_ARR:
@@ -47,8 +46,8 @@ const getUsersAdvFql = ({ input }) => {
   return fql;
 };
 
-const getUsers = async ({ anyCollection, input }) => {
-  const fql = getUsersAdvFql({ anyCollection, input });
+const getUsers = async ({ sort, page, filterMap }) => {
+  const fql = getUsersAdvFql({ sort, page, filterMap });
   const pageObj = await db.query(fql);
   console.log("getUsers: pageObj", pageObj);
 

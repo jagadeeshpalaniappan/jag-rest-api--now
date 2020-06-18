@@ -21,7 +21,12 @@ const validateGetUsers = ({ filterMap }) => {
 };
 
 const getUsersValidateMiddleware = [
-  check("sort").isIn(["name", "username", "created"]),
+  check("sort", "Invalid 'sort' value").isIn([
+    "",
+    "name",
+    "username",
+    "created",
+  ]),
   check("pageSize").toInt(),
 ];
 
@@ -33,16 +38,13 @@ router.get("/users", getUsersValidateMiddleware, async function (req, res) {
       return res.status(422).json({ errors: errors.array() });
     }
 
+    // VALIDATION: SUCCESS:
+
+    // POPULATE:
     const { search, sort, pageSize, pageBefore, pageAfter, filters } =
       req.query || {};
-    const page = {
-      size: pageSize,
-      before: pageBefore,
-      after: pageAfter,
-    };
-
-    // console.log({ filters });
-
+    console.log({ search, sort, pageSize, pageBefore, pageAfter, filters });
+    const page = { size: pageSize, before: pageBefore, after: pageAfter };
     const filterMap = filters ? arrToMap(JSON.parse(filters)) : {};
     filterMap.fuzzySearch = search;
 
@@ -50,9 +52,8 @@ router.get("/users", getUsersValidateMiddleware, async function (req, res) {
     if (postErrors && postErrors.length > 0)
       res.status(400).json({ errors: postErrors });
 
-    // VALIDATION: SUCCESS:
-    const input = { search, sort, page, filterMap };
-    const users = await userService.getUsers({ input });
+    // POST-VALIDATION: SUCCESS:
+    const users = await userService.getUsers({ search, sort, page, filterMap });
     res.json({ users });
   } catch (err) {
     console.error(err);

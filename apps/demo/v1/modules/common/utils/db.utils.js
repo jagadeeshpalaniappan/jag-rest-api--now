@@ -76,29 +76,17 @@ const getCursors = (pageObj) => {
   return { before, after };
 };
 
-const getPageConfig = ({ input }) => {
-  const { page } = input;
+const getPageConfig = (page) => {
   const { size, before, after } = page;
   const pageConfig = {};
-  if (size) pageConfig.size = Number(size);
+  if (size) pageConfig.size = size;
   if (before) pageConfig.before = decodeCursor(before);
   if (after) pageConfig.after = decodeCursor(after);
   return pageConfig;
 };
 
-const getAnyCollectionConfig = ({ collectionName, input }) => {
-  const { search, sort } = input;
-  const config = anyConfig[collectionName];
-  // const collection = config.collection;
-  const index = sort ? config.sortIndex[sort] : config.defaultIndex;
-
-  console.log({ input, collection, index, pageConfig });
-  return { collection, index, pageConfig };
-};
-
 module.exports = {
   getId,
-  getAnyCollectionConfig,
   getPageConfig,
   getCursors,
 };
