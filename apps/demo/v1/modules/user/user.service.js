@@ -8,8 +8,12 @@ const getUser = (...args) => {
   return userDao.getUser(...args);
 };
 
-const addUser = (...args) => {
-  return userDao.addUser(...args);
+const createUser = (...args) => {
+  return userDao.createUser(...args);
+};
+
+const createUsers = (...args) => {
+  return userDao.createUsers(...args);
 };
 
 const updateUser = (...args) => {
@@ -27,7 +31,8 @@ const deleteAllUser = ({ collection }) => {
 module.exports = {
   getUsers,
   getUser,
-  addUser,
+  createUser,
+  createUsers,
   updateUser,
   deleteUser,
   deleteAllUser,

@@ -52,9 +52,9 @@ const getUsers = async ({ sort, page, filterMap }) => {
   console.log("getUsers: pageObj", pageObj);
 
   // populate: resp
-  const items = pageObj.data.map((item) => ({
-    id: getId(item.ref),
-    ...item.data,
+  const items = pageObj.data.map((user) => ({
+    id: getId(user.ref),
+    ...user.data,
   }));
 
   const { before, after } = getCursors(pageObj);
@@ -70,17 +70,34 @@ const getUser = async ({ id }) => {
   return { id: getId(dbUser.ref), ...dbUser.data };
 };
 
-const addUser = async ({ item }) => {
+const createUser = async ({ user }) => {
   const createDocQuery = q.Create(q.Collection(COLLECTION_NAME), {
-    data: item,
+    data: user,
   }); // getCollectionRef and CreateDoc(collectionRef, newDoc)
   const dbUser = await db.query(createDocQuery);
   return { id: getId(dbUser.ref), ...dbUser.data };
 };
 
-const updateUser = async ({ id, item }) => {
+const createUsers = async ({ users }) => {
+  const createDocsQuery = q.Map(
+    users,
+    q.Lambda(
+      "user",
+      q.Create(q.Collection(COLLECTION_NAME), { data: q.Var("user") })
+    )
+  );
+  const resp = await db.query(createDocsQuery);
+  // populate: resp
+  const dbUsers = resp.map((user) => ({
+    id: getId(user.ref),
+    ...user.data,
+  }));
+  return dbUsers;
+};
+
+const updateUser = async ({ id, user }) => {
   const updateDocQuery = q.Update(q.Ref(q.Collection(COLLECTION_NAME), id), {
-    data: item,
+    data: user,
   }); // getCollectionRef and getDocRefById and UpdateDoc(docRef, updatedDocUser)
   const dbUser = await db.query(updateDocQuery);
   return { id: getId(dbUser.ref), ...dbUser.data };
@@ -95,7 +112,7 @@ const deleteUser = async ({ id }) => {
 const deleteAllUser = async () => {
   const deleteAllDocQuery = q.Map(
     q.Paginate(q.Match(q.Index("all_users"))),
-    q.Lambda("item", q.Delete(q.Var("item")))
+    q.Lambda("user", q.Delete(q.Var("user")))
   );
   const dbUser = await db.query(deleteAllDocQuery);
   return { id: getId(dbUser.ref), ...dbUser.data };
@@ -104,7 +121,8 @@ const deleteAllUser = async () => {
 module.exports = {
   getUsers,
   getUser,
-  addUser,
+  createUser,
+  createUsers,
   updateUser,
   deleteUser,
   deleteAllUser,

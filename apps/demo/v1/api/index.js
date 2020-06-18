@@ -77,9 +77,16 @@ router.get("/users/:id", async function (req, res) {
 // POST: /api/v1/users
 router.post("/users", async function (req, res) {
   try {
-    const user = req.body;
-    const updatedUser = await userService.addUser({ user });
-    res.json({ user: updatedUser });
+    // const updatedUser = await userService.createUser({ user: req.body });
+    let users = Array.isArray(req.body) ? req.body : [req.body];
+    const updatedUsers = await userService.createUsers({ users }); // bulkCreate
+
+    // RESP:
+    const output = {};
+    if (updatedUsers && updatedUsers.length === 1)
+      output.user = updatedUsers[0];
+    else output.users = updatedUsers;
+    res.json(output);
   } catch (err) {
     const { name, message, description } = err || {};
     res.status(500);
