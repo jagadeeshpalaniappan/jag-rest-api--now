@@ -1,22 +1,10 @@
 // API: GRAPHQL-API
 
 var router = require("express").Router();
-const { ApolloServer, gql } = require("apollo-server-express");
-const { typeDefs, resolvers } = require("./modules");
+const { ApolloServer } = require("apollo-server-express");
+const { resolvers } = require("./resolvers");
+const { typeDefs } = require("./typeDefs");
 
-// // Construct a schema, using GraphQL schema language
-// const typeDefs = gql`
-//   type Query {
-//     hello: String
-//   }
-// `;
-
-// // Provide resolver functions for your schema fields
-// const resolvers = {
-//   Query: {
-//     hello: () => "Hello Jag!",
-//   },
-// };
 const server = new ApolloServer({
   typeDefs,
   resolvers,

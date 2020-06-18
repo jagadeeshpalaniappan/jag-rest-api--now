@@ -1,5 +1,5 @@
 const xss = require("xss");
-const userService = require("../../../../../../modules/user/user.service");
+const userService = require("../../../../../modules/user/user.service");
 // const postDao = require("../post/userService");
 // const todoDao = require("../todo/userService");
 // const { validateFields } = require("../../utils/common");

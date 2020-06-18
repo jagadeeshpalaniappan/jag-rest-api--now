@@ -1,12 +1,12 @@
 let { gql } = require("apollo-server-express");
 
 // common:
-const commonTypeDefs = require("./common/typeDefs");
-const commonResolvers = require("./common/resolvers");
+const commonTypeDefs = require("./common");
+// const commonResolvers = require("./common/resolvers");
 
 // user:
-const userTypeDefs = require("./user/typeDefs");
-const userResolvers = require("./user/resolvers");
+const userTypeDefs = require("./user");
+// const userResolvers = require("./user/resolvers");
 
 // // post:
 // const postTypeDefs = require("./post/typeDefs");
@@ -32,17 +32,17 @@ const typeDefs = [
   // todoTypeDefs,
 ];
 
-const resolvers = {
-  Query: {
-    hello: () => "Hello Jag!!!!!",
-    // ...commonResolvers.Query,
-    ...userResolvers.Query,
-  },
-  Mutation: {
-    // ...commonResolvers.Mutation,
-    // ...userResolvers.Mutation,
-  },
-  // User: userResolvers.User,
-};
+// const resolvers = {
+//   Query: {
+//     hello: () => "Hello Jag!!!!!",
+//     // ...commonResolvers.Query,
+//     ...userResolvers.Query,
+//   },
+//   Mutation: {
+//     // ...commonResolvers.Mutation,
+//     // ...userResolvers.Mutation,
+//   },
+//   // User: userResolvers.User,
+// };
 
-module.exports = { typeDefs, resolvers };
+module.exports = { typeDefs };
