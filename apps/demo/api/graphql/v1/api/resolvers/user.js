@@ -2,17 +2,6 @@
 const userService = require("../../../../../modules/user/user.service");
 const postService = require("../../../../../modules/post/post.service");
 const todoService = require("../../../../../modules/todo/todo.service");
-const { arrToMap } = require("../../../../../modules/common/utils/all.utils");
-
-// const postDao = require("../post/userService");
-// const todoDao = require("../todo/userService");
-// const { validateFields } = require("../../utils/common");
-
-/*
-function users(root, args, session) {
-  return userService.getUsers();
-}
-*/
 
 async function users(root, args, session) {
   const { options } = args || {};

@@ -7,10 +7,7 @@ const typeDefs = gql`
     description: String
     isActive: Boolean
     userId: String
-    # todos: [Todo]
-    # todos: [Todo]
-    # todos(options: TodosPageQueryOptions): TodosPage # TODO: facing problem in filtering and applying criteria
-    # todos(options: TodosPageQueryOptions): TodosPage
+    user: User
   }
 
   input CreateTodoInput {
@@ -45,7 +42,6 @@ const typeDefs = gql`
   }
 
   extend type Query {
-    # todos: [Todo] # **deprecated** (use with pagination)
     todos(options: TodosQueryOptions): TodosPage
     todo(id: ID!): Todo
   }

@@ -18,6 +18,8 @@ const resolvers = {
     ...todoResolvers.Mutation,
   },
   User: userResolvers.User,
+  Post: postResolvers.Post,
+  Todo: todoResolvers.Todo,
 };
 
 module.exports = { resolvers };

@@ -8,10 +8,7 @@ const typeDefs = gql`
     viewCount: Int
     isActive: Boolean
     userId: String
-    # posts: [Post]
-    # todos: [Todo]
-    # posts(options: PostsPageQueryOptions): PostsPage # TODO: facing problem in filtering and applying criteria
-    # todos(options: TodosPageQueryOptions): TodosPage
+    user: User
   }
 
   input CreatePostInput {

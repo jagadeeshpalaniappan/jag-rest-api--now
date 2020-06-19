@@ -1,15 +1,6 @@
 // const xss = require("xss");  // TODO:
 const postService = require("../../../../../modules/post/post.service");
-const { arrToMap } = require("../../../../../modules/common/utils/all.utils");
-// const postDao = require("../post/postService");
-// const todoDao = require("../todo/postService");
-// const { validateFields } = require("../../utils/common");
-
-/*
-function posts(root, args, session) {
-  return postService.getPosts();
-}
-*/
+const userService = require("../../../../../modules/user/user.service");
 
 async function posts(root, args, session) {
   const { options } = args || {};
@@ -59,15 +50,11 @@ async function deletePost(root, args, session) {
   return !!deletedPost;
 }
 
-// function posts(root, args, session) {
-//   const post = root; // from: root we can parentInfo
-//   return postDao.getPostsByPostId({ postId: post.id });
-// }
-
-// function todos(root, args, session) {
-//   const post = root; // from: root we can parentInfo
-//   return todoDao.getTodosByPostId({ postId: post.id });
-// }
+async function user(root, args, session) {
+  const post = root; // from: root we can get parentInfo
+  console.log("user:", { post });
+  return userService.getUser({ id: post.userId });
+}
 
 const resolvers = {
   Query: { posts, post },
@@ -76,10 +63,9 @@ const resolvers = {
     updatePost,
     deletePost,
   },
-  // Post: {
-  //   posts,
-  //   todos,
-  // },
+  Post: {
+    user,
+  },
 };
 
 module.exports = resolvers;
