@@ -111,7 +111,7 @@ const deleteUser = async ({ id }) => {
 
 const deleteAllUser = async () => {
   const deleteAllDocQuery = q.Map(
-    q.Paginate(q.Match(q.Index("all_users"))),
+    q.Paginate(q.Match(q.Index("users_idx"))),
     q.Lambda("user", q.Delete(q.Var("user")))
   );
   const dbUser = await db.query(deleteAllDocQuery);

@@ -8,14 +8,13 @@ const {
   getCursors,
 } = require("../common/utils/db.utils");
 
-const COLLECTION_NAME = "users";
-const SEARCH_TERMS = ["fuzzySearch", "role", "sex", "isActive"];
+const COLLECTION_NAME = "todos";
+const SEARCH_TERMS = ["fuzzySearch", "title", "userId", "isActive"];
 const INDEX_CONFIG = {
-  defaultIndex: "users_idx_advsearch",
+  defaultIndex: "todos_idx_advsearch",
   sortIndex: {
-    name: "users_idx_advsearch_sortby@name",
-    username: "users_idx_advsearch_sortby@username",
-    updatedTs: "users_idx_advsearch_sortby@updatedTs",
+    updatedTs: "todos_idx_advsearch_sortby@updatedTs",
+    title: "todos_idx_advsearch_sortby@title",
   },
 };
 
@@ -111,7 +110,7 @@ const deleteTodo = async ({ id }) => {
 
 const deleteAllTodo = async () => {
   const deleteAllDocQuery = q.Map(
-    q.Paginate(q.Match(q.Index("all_todos"))),
+    q.Paginate(q.Match(q.Index("todos_idx"))),
     q.Lambda("todo", q.Delete(q.Var("todo")))
   );
   const dbTodo = await db.query(deleteAllDocQuery);

@@ -41,7 +41,8 @@ function post(root, args, session) {
 
 function createPost(root, args, session) {
   console.log("createPost:", args);
-  const post = args.input;
+  const input = args.input;
+  const post = { ...input, isActive: true };
   return postService.createPost({ post });
 }
 

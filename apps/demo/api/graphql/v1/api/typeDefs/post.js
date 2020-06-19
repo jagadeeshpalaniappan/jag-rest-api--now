@@ -6,8 +6,8 @@ const typeDefs = gql`
     title: String
     body: String
     viewCount: Int
-    userId: String
     isActive: Boolean
+    userId: String
     # posts: [Post]
     # todos: [Todo]
     # posts(options: PostsPageQueryOptions): PostsPage # TODO: facing problem in filtering and applying criteria
@@ -18,15 +18,14 @@ const typeDefs = gql`
     title: String!
     body: String!
     userId: String
-    isActive: Boolean
   }
 
   input UpdatePostInput {
     title: String
     body: String
     viewCount: Int
-    userId: String
     isActive: Boolean
+    userId: String
   }
 
   type PostsPage {
@@ -36,8 +35,8 @@ const typeDefs = gql`
 
   input PostFilterOptions {
     title: String
-    userId: String
     isActive: Boolean
+    userId: String
   }
 
   input PostsQueryOptions {

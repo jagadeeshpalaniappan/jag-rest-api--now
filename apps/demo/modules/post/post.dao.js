@@ -111,7 +111,7 @@ const deletePost = async ({ id }) => {
 
 const deleteAllPost = async () => {
   const deleteAllDocQuery = q.Map(
-    q.Paginate(q.Match(q.Index("all_posts"))),
+    q.Paginate(q.Match(q.Index("posts_idx"))),
     q.Lambda("post", q.Delete(q.Var("post")))
   );
   const dbPost = await db.query(deleteAllDocQuery);

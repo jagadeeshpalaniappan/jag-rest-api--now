@@ -41,7 +41,8 @@ function todo(root, args, session) {
 
 function createTodo(root, args, session) {
   console.log("createTodo:", args);
-  const todo = args.input;
+  const input = args.input;
+  const todo = { ...input, isActive: true };
   return todoService.createTodo({ todo });
 }
 

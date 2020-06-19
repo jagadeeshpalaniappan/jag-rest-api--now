@@ -3,13 +3,10 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Todo {
     id: ID
-    name: String
-    email: String
-    todoname: String
-    phone: String
-    sex: String
-    role: String
+    title: String
+    description: String
     isActive: Boolean
+    userId: String
     # todos: [Todo]
     # todos: [Todo]
     # todos(options: TodosPageQueryOptions): TodosPage # TODO: facing problem in filtering and applying criteria
@@ -17,23 +14,16 @@ const typeDefs = gql`
   }
 
   input CreateTodoInput {
-    name: String!
-    email: String!
-    todoname: String!
-    phone: String
-    sex: String
-    role: String
-    isActive: Boolean
+    title: String!
+    description: String
+    userId: String
   }
 
   input UpdateTodoInput {
-    name: String
-    email: String
-    todoname: String
-    phone: String
-    sex: String
-    role: String
+    title: String
+    description: String
     isActive: Boolean
+    userId: String
   }
 
   type TodosPage {
@@ -42,9 +32,9 @@ const typeDefs = gql`
   }
 
   input TodoFilterOptions {
-    sex: String
-    role: String
+    title: String
     isActive: Boolean
+    userId: String
   }
 
   input TodosQueryOptions {

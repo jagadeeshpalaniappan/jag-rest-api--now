@@ -17,15 +17,14 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const COLLECTION_NAME = "posts";
+const COLLECTION_NAME = "todos";
 
 const SEARCH_TERMS = ["fuzzySearch", "title", "userId", "isActive"];
 const INDEX_CONFIG = {
-  defaultIndex: "posts_idx_advsearch",
+  defaultIndex: "todos_idx_advsearch",
   sortIndex: {
-    updatedTs: "posts_idx_advsearch_sortby@updatedTs",
-    title: "posts_idx_advsearch_sortby@title",
-    viewCount: "posts_idx_advsearch_sortby@viewCount",
+    updatedTs: "todos_idx_advsearch_sortby@updatedTs",
+    title: "todos_idx_advsearch_sortby@title",
   },
 };
 
@@ -42,7 +41,7 @@ async function main() {
 
     await createDefaultIndex({
       client,
-      name: "posts_idx",
+      name: "todos_idx",
       collectionName: COLLECTION_NAME,
     });
 
@@ -52,7 +51,7 @@ async function main() {
     await createAdvSearchBySort({
       client,
       collectionName: COLLECTION_NAME,
-      name: "posts_idx_advsearch",
+      name: "todos_idx_advsearch",
       searchConfig: SEARCH_CONFIG,
     });
 
@@ -62,7 +61,7 @@ async function main() {
     await createAdvSearchBySort({
       client,
       collectionName: COLLECTION_NAME,
-      name: "posts_idx_advsearch_sortby@updatedTs",
+      name: "todos_idx_advsearch_sortby@updatedTs",
       sortField: ["ts"],
       searchConfig: SEARCH_CONFIG,
     });
@@ -73,19 +72,8 @@ async function main() {
     await createAdvSearchBySort({
       client,
       collectionName: COLLECTION_NAME,
-      name: "posts_idx_advsearch_sortby@title",
+      name: "todos_idx_advsearch_sortby@title",
       sortField: ["data", "title"],
-      searchConfig: SEARCH_CONFIG,
-    });
-
-    await sleep(500);
-
-    // 3: SORTBY-viewCount
-    await createAdvSearchBySort({
-      client,
-      collectionName: COLLECTION_NAME,
-      name: "posts_idx_advsearch_sortby@viewCount",
-      sortField: ["data", "viewCount"],
       searchConfig: SEARCH_CONFIG,
     });
   } catch (e) {
