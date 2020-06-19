@@ -17,7 +17,7 @@ const resolvers = {
     ...postResolvers.Mutation,
     ...todoResolvers.Mutation,
   },
-  // User: userResolvers.User,
+  User: userResolvers.User,
 };
 
 module.exports = { resolvers };
