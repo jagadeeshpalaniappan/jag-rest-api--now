@@ -55,13 +55,13 @@ router.get("/users", getUsersValidateMiddleware, async function (req, res) {
       res.status(400).json({ errors: postErrors });
 
     // POST-VALIDATION: SUCCESS:
-    const users = await userService.getUsers({
+    const { data, before, after } = await userService.getUsers({
       search,
       sort,
       pagination,
       filterMap,
     });
-    res.json({ users });
+    res.json({ data, meta: { before, after } });
   } catch (err) {
     console.error(err);
     const { name, message, description } = err || {};
