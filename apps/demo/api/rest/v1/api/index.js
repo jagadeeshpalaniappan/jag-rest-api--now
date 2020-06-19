@@ -46,7 +46,7 @@ router.get("/users", getUsersValidateMiddleware, async function (req, res) {
     const { search, sort, pageSize, pageBefore, pageAfter, filters } =
       req.query || {};
     console.log({ search, sort, pageSize, pageBefore, pageAfter, filters });
-    const page = { size: pageSize, before: pageBefore, after: pageAfter };
+    const pagination = { size: pageSize, before: pageBefore, after: pageAfter };
     const filterMap = filters ? arrToMap(JSON.parse(filters)) : {};
     filterMap.fuzzySearch = search;
 
@@ -55,7 +55,12 @@ router.get("/users", getUsersValidateMiddleware, async function (req, res) {
       res.status(400).json({ errors: postErrors });
 
     // POST-VALIDATION: SUCCESS:
-    const users = await userService.getUsers({ search, sort, page, filterMap });
+    const users = await userService.getUsers({
+      search,
+      sort,
+      pagination,
+      filterMap,
+    });
     res.json({ users });
   } catch (err) {
     console.error(err);

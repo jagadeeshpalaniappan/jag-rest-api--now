@@ -1,11 +1,11 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type User {
+  type Post {
     id: ID
     name: String
     email: String
-    username: String
+    postname: String
     phone: String
     sex: String
     role: String
@@ -16,54 +16,54 @@ const typeDefs = gql`
     # todos(options: TodosPageQueryOptions): TodosPage
   }
 
-  input CreateUserInput {
+  input CreatePostInput {
     name: String!
     email: String!
-    username: String!
+    postname: String!
     phone: String
     sex: String
     role: String
     isActive: Boolean
   }
 
-  input UpdateUserInput {
+  input UpdatePostInput {
     name: String
     email: String
-    username: String
+    postname: String
     phone: String
     sex: String
     role: String
     isActive: Boolean
   }
 
-  type UsersPage {
-    data: [User]
+  type PostsPage {
+    data: [Post]
     meta: PageMetadata
   }
 
-  input UserFilterOptions {
+  input PostFilterOptions {
     sex: String
     role: String
     isActive: Boolean
   }
 
-  input UsersQueryOptions {
+  input PostsQueryOptions {
     pagination: PaginationOptions
     search: String
     sort: String
-    filterBy: UserFilterOptions
+    filterBy: PostFilterOptions
   }
 
   extend type Query {
-    # users: [User] # **deprecated** (use with pagination)
-    users(options: UsersQueryOptions): UsersPage
-    user(id: ID!): User
+    # posts: [Post] # **deprecated** (use with pagination)
+    posts(options: PostsQueryOptions): PostsPage
+    post(id: ID!): Post
   }
 
   extend type Mutation {
-    createUser(input: CreateUserInput!): User
-    updateUser(id: ID!, input: UpdateUserInput!): User
-    deleteUser(id: ID!): Boolean
+    createPost(input: CreatePostInput!): Post
+    updatePost(id: ID!, input: UpdatePostInput!): Post
+    deletePost(id: ID!): Boolean
   }
 `;
 

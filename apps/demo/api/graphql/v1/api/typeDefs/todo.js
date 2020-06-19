@@ -1,69 +1,69 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type User {
+  type Todo {
     id: ID
     name: String
     email: String
-    username: String
+    todoname: String
     phone: String
     sex: String
     role: String
     isActive: Boolean
-    # posts: [Post]
     # todos: [Todo]
-    # posts(options: PostsPageQueryOptions): PostsPage # TODO: facing problem in filtering and applying criteria
+    # todos: [Todo]
+    # todos(options: TodosPageQueryOptions): TodosPage # TODO: facing problem in filtering and applying criteria
     # todos(options: TodosPageQueryOptions): TodosPage
   }
 
-  input CreateUserInput {
+  input CreateTodoInput {
     name: String!
     email: String!
-    username: String!
+    todoname: String!
     phone: String
     sex: String
     role: String
     isActive: Boolean
   }
 
-  input UpdateUserInput {
+  input UpdateTodoInput {
     name: String
     email: String
-    username: String
+    todoname: String
     phone: String
     sex: String
     role: String
     isActive: Boolean
   }
 
-  type UsersPage {
-    data: [User]
+  type TodosPage {
+    data: [Todo]
     meta: PageMetadata
   }
 
-  input UserFilterOptions {
+  input TodoFilterOptions {
     sex: String
     role: String
     isActive: Boolean
   }
 
-  input UsersQueryOptions {
+  input TodosQueryOptions {
     pagination: PaginationOptions
     search: String
     sort: String
-    filterBy: UserFilterOptions
+    filterBy: TodoFilterOptions
   }
 
   extend type Query {
-    # users: [User] # **deprecated** (use with pagination)
-    users(options: UsersQueryOptions): UsersPage
-    user(id: ID!): User
+    # todos: [Todo] # **deprecated** (use with pagination)
+    todos(options: TodosQueryOptions): TodosPage
+    todo(id: ID!): Todo
   }
 
   extend type Mutation {
-    createUser(input: CreateUserInput!): User
-    updateUser(id: ID!, input: UpdateUserInput!): User
-    deleteUser(id: ID!): Boolean
+    createTodo(input: CreateTodoInput!): Todo
+    updateTodo(id: ID!, input: UpdateTodoInput!): Todo
+    deleteTodo(id: ID!): Boolean
   }
 `;
 

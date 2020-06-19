@@ -27,7 +27,7 @@ const getSearchValues = (filterMap) => {
   return SEARCH_TERMS.map((terms) => (filterMap && filterMap[terms]) || "*");
 };
 
-const getUsersAdvFql = ({ sort, pagination, filterMap }) => {
+const getTodosAdvFql = ({ sort, pagination, filterMap }) => {
   const pageConfig = getPageConfig(pagination);
   const index = getIndexName(sort);
 
@@ -46,84 +46,84 @@ const getUsersAdvFql = ({ sort, pagination, filterMap }) => {
   return fql;
 };
 
-const getUsers = async ({ sort, pagination, filterMap }) => {
-  const fql = getUsersAdvFql({ sort, pagination, filterMap });
+const getTodos = async ({ sort, pagination, filterMap }) => {
+  const fql = getTodosAdvFql({ sort, pagination, filterMap });
   const pageObj = await db.query(fql);
-  // console.log("getUsers: pageObj", pageObj);
+  // console.log("getTodos: pageObj", pageObj);
 
   // populate: resp
-  const items = pageObj.data.map((user) => ({
-    id: getId(user.ref),
-    ...user.data,
+  const items = pageObj.data.map((todo) => ({
+    id: getId(todo.ref),
+    ...todo.data,
   }));
 
   const { before, after } = getCursors(pageObj);
   return { data: items, before, after };
 };
 
-const getUser = async ({ id }) => {
-  const getUserByIdQuery = q.Get(q.Ref(q.Collection(COLLECTION_NAME), id)); // getCollectionRef and getDocRefById and GetDoc
-  const dbUser = await db.query(getUserByIdQuery);
-  return { id: getId(dbUser.ref), ...dbUser.data };
+const getTodo = async ({ id }) => {
+  const getTodoByIdQuery = q.Get(q.Ref(q.Collection(COLLECTION_NAME), id)); // getCollectionRef and getDocRefById and GetDoc
+  const dbTodo = await db.query(getTodoByIdQuery);
+  return { id: getId(dbTodo.ref), ...dbTodo.data };
 };
 
-const createUser = async ({ user }) => {
-  console.log("DAO: createUsers: ", { user });
+const createTodo = async ({ todo }) => {
+  console.log("DAO: createTodos: ", { todo });
   const createDocQuery = q.Create(q.Collection(COLLECTION_NAME), {
-    data: user,
+    data: todo,
   }); // getCollectionRef and CreateDoc(collectionRef, newDoc)
-  const dbUser = await db.query(createDocQuery);
-  return { id: getId(dbUser.ref), ...dbUser.data };
+  const dbTodo = await db.query(createDocQuery);
+  return { id: getId(dbTodo.ref), ...dbTodo.data };
 };
 
-const createUsers = async ({ users }) => {
-  console.log("DAO: createUsers: ", { users });
+const createTodos = async ({ todos }) => {
+  console.log("DAO: createTodos: ", { todos });
 
   const createDocsQuery = q.Map(
-    users,
+    todos,
     q.Lambda(
-      "user",
-      q.Create(q.Collection(COLLECTION_NAME), { data: q.Var("user") })
+      "todo",
+      q.Create(q.Collection(COLLECTION_NAME), { data: q.Var("todo") })
     )
   );
   const resp = await db.query(createDocsQuery);
   // populate: resp
-  const dbUsers = resp.map((user) => ({
-    id: getId(user.ref),
-    ...user.data,
+  const dbTodos = resp.map((todo) => ({
+    id: getId(todo.ref),
+    ...todo.data,
   }));
-  return dbUsers;
+  return dbTodos;
 };
 
-const updateUser = async ({ id, user }) => {
+const updateTodo = async ({ id, todo }) => {
   const updateDocQuery = q.Update(q.Ref(q.Collection(COLLECTION_NAME), id), {
-    data: user,
-  }); // getCollectionRef and getDocRefById and UpdateDoc(docRef, updatedDocUser)
-  const dbUser = await db.query(updateDocQuery);
-  return { id: getId(dbUser.ref), ...dbUser.data };
+    data: todo,
+  }); // getCollectionRef and getDocRefById and UpdateDoc(docRef, updatedDocTodo)
+  const dbTodo = await db.query(updateDocQuery);
+  return { id: getId(dbTodo.ref), ...dbTodo.data };
 };
 
-const deleteUser = async ({ id }) => {
+const deleteTodo = async ({ id }) => {
   const deleteDocQuery = q.Delete(q.Ref(q.Collection(COLLECTION_NAME), id)); // getCollectionRef and getDocRefById and DeleteDoc(docRef)
-  const dbUser = await db.query(deleteDocQuery);
-  return { id: getId(dbUser.ref), ...dbUser.data };
+  const dbTodo = await db.query(deleteDocQuery);
+  return { id: getId(dbTodo.ref), ...dbTodo.data };
 };
 
-const deleteAllUser = async () => {
+const deleteAllTodo = async () => {
   const deleteAllDocQuery = q.Map(
-    q.Paginate(q.Match(q.Index("all_users"))),
-    q.Lambda("user", q.Delete(q.Var("user")))
+    q.Paginate(q.Match(q.Index("all_todos"))),
+    q.Lambda("todo", q.Delete(q.Var("todo")))
   );
-  const dbUser = await db.query(deleteAllDocQuery);
-  return { id: getId(dbUser.ref), ...dbUser.data };
+  const dbTodo = await db.query(deleteAllDocQuery);
+  return { id: getId(dbTodo.ref), ...dbTodo.data };
 };
 
 module.exports = {
-  getUsers,
-  getUser,
-  createUser,
-  createUsers,
-  updateUser,
-  deleteUser,
-  deleteAllUser,
+  getTodos,
+  getTodo,
+  createTodo,
+  createTodos,
+  updateTodo,
+  deleteTodo,
+  deleteAllTodo,
 };

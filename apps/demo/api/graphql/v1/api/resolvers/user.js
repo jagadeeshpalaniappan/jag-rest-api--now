@@ -1,4 +1,4 @@
-const xss = require("xss");
+// const xss = require("xss");  // TODO:
 const userService = require("../../../../../modules/user/user.service");
 const { arrToMap } = require("../../../../../modules/common/utils/all.utils");
 // const postDao = require("../post/userService");
@@ -13,19 +13,20 @@ function users(root, args, session) {
 
 async function users(root, args, session) {
   const { options } = args || {};
-  const { pagination, search, sort, filters } = options || {};
+  const { pagination, search, sort, filterBy } = options || {};
 
-  console.log({ search, sort, pagination, filters });
+  console.log({ search, sort, pagination, filterBy });
 
-  const filterMap = filters ? arrToMap(filters) : {};
-  filterMap.fuzzySearch = search;
+  const filterMap = search
+    ? { fuzzySearch: search, ...filterBy }
+    : { ...filterBy };
 
   console.log({ filterMap });
 
   const { data, before, after } = await userService.getUsers({
     search,
     sort,
-    page: pagination,
+    pagination,
     filterMap,
   });
 
@@ -40,11 +41,6 @@ function user(root, args, session) {
 
 function createUser(root, args, session) {
   console.log("createUser:", args);
-  // const { name, email } = args.input;
-  // const user = { name: xss(name), email: xss(email) };
-  // let required = ["name", "email"];
-  // validateFields(user, required);
-
   const user = args.input;
   return userService.createUser({ user });
 }
@@ -52,20 +48,12 @@ function createUser(root, args, session) {
 function updateUser(root, args, session) {
   console.log("updateUser:", args);
   const { id } = args;
-  // const { name, email } = args.input;
-  // const user = {};
-  // if (name) user.name = xss(name);
-  // if (email) user.email = xss(email);
-  // let required = ["name", "email"];
-  // validateFields(user, required);
-
   const user = args.input;
   return userService.updateUser({ id, user });
 }
 
 async function deleteUser(root, args, session) {
   const { id } = args;
-  // validateFields({ id }, ["id"]);
   const deletedUser = await userService.deleteUser({ id });
   return !!deletedUser;
 }
