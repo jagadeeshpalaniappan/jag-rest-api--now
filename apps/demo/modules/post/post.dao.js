@@ -8,14 +8,14 @@ const {
   getCursors,
 } = require("../common/utils/db.utils");
 
-const COLLECTION_NAME = "users";
-const SEARCH_TERMS = ["fuzzySearch", "role", "sex", "isActive"];
+const COLLECTION_NAME = "posts";
+const SEARCH_TERMS = ["fuzzySearch", "title", "userId", "isActive"];
 const INDEX_CONFIG = {
-  defaultIndex: "users_idx_advsearch",
+  defaultIndex: "posts_idx_advsearch",
   sortIndex: {
-    name: "users_idx_advsearch_sortby@name",
-    username: "users_idx_advsearch_sortby@username",
-    updatedTs: "users_idx_advsearch_sortby@updatedTs",
+    updatedTs: "posts_idx_advsearch_sortby@updatedTs",
+    title: "posts_idx_advsearch_sortby@title",
+    viewCount: "posts_idx_advsearch_sortby@viewCount",
   },
 };
 

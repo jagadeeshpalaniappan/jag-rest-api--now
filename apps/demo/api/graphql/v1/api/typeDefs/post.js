@@ -3,12 +3,10 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Post {
     id: ID
-    name: String
-    email: String
-    postname: String
-    phone: String
-    sex: String
-    role: String
+    title: String
+    body: String
+    viewCount: Int
+    userId: String
     isActive: Boolean
     # posts: [Post]
     # todos: [Todo]
@@ -17,22 +15,17 @@ const typeDefs = gql`
   }
 
   input CreatePostInput {
-    name: String!
-    email: String!
-    postname: String!
-    phone: String
-    sex: String
-    role: String
+    title: String!
+    body: String!
+    userId: String
     isActive: Boolean
   }
 
   input UpdatePostInput {
-    name: String
-    email: String
-    postname: String
-    phone: String
-    sex: String
-    role: String
+    title: String
+    body: String
+    viewCount: Int
+    userId: String
     isActive: Boolean
   }
 
@@ -42,8 +35,8 @@ const typeDefs = gql`
   }
 
   input PostFilterOptions {
-    sex: String
-    role: String
+    title: String
+    userId: String
     isActive: Boolean
   }
 
@@ -55,7 +48,6 @@ const typeDefs = gql`
   }
 
   extend type Query {
-    # posts: [Post] # **deprecated** (use with pagination)
     posts(options: PostsQueryOptions): PostsPage
     post(id: ID!): Post
   }
