@@ -25,13 +25,13 @@ async function getUsers(req, res) {
     // POPULATE:
     const { search, sort, pageSize, pageBefore, pageAfter, filterBy } = input;
     const pagination = { size: pageSize, before: pageBefore, after: pageAfter };
-    const filterMap = { ...filterBy, fuzzySearch: search };
+    const filterTerms = { ...filterBy, fuzzySearch: search };
 
     // TX:
     const { data, before, after } = await userService.getUsers({
       sort,
       pagination,
-      filterMap,
+      filterTerms,
     });
 
     // RESP:

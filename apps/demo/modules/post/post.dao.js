@@ -23,16 +23,18 @@ const getIndexName = (sort) => {
   return sort ? INDEX_CONFIG.sortIndex[sort] : INDEX_CONFIG.defaultIndex;
 };
 
-const getSearchValues = (filterMap) => {
-  return SEARCH_TERMS.map((terms) => (filterMap && filterMap[terms]) || "*");
+const getSearchValues = (filterTerms) => {
+  return SEARCH_TERMS.map(
+    (terms) => (filterTerms && filterTerms[terms]) || "*"
+  );
 };
 
-const getPostsAdvFql = ({ sort, pagination, filterMap }) => {
+const getPostsAdvFql = ({ sort, pagination, filterTerms }) => {
   const pageConfig = getPageConfig(pagination);
   const index = getIndexName(sort);
 
   // SEARCH_VAL_ARR:
-  const searchVals = getSearchValues(filterMap);
+  const searchVals = getSearchValues(filterTerms);
 
   // READY-TO_QUERY:
   console.log({ index, pageConfig, sort, searchVals });
@@ -46,8 +48,8 @@ const getPostsAdvFql = ({ sort, pagination, filterMap }) => {
   return fql;
 };
 
-const getPosts = async ({ sort, pagination, filterMap }) => {
-  const fql = getPostsAdvFql({ sort, pagination, filterMap });
+const getPosts = async ({ sort, pagination, filterTerms }) => {
+  const fql = getPostsAdvFql({ sort, pagination, filterTerms });
   const pageObj = await db.query(fql);
   // console.log("getPosts: pageObj", pageObj);
 

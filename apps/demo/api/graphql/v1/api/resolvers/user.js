@@ -9,17 +9,17 @@ async function users(root, args, session) {
 
   console.log({ search, sort, pagination, filterBy });
 
-  const filterMap = search
+  const filterTerms = search
     ? { fuzzySearch: search, ...filterBy }
     : { ...filterBy };
 
-  console.log({ filterMap });
+  console.log({ filterTerms });
 
   const { data, before, after } = await userService.getUsers({
     search,
     sort,
     pagination,
-    filterMap,
+    filterTerms,
   });
 
   console.log({ users });
@@ -55,12 +55,12 @@ async function posts(root, args, session) {
 
   console.log("posts:", { user });
 
-  const filterMap = { userId: user.id };
+  const filterTerms = { userId: user.id };
   const { data, before, after } = await postService.getPosts({
     // search,
     // sort,
     // pagination,
-    filterMap,
+    filterTerms,
   });
 
   return data;
@@ -71,12 +71,12 @@ async function todos(root, args, session) {
 
   console.log("todos:", { user });
 
-  const filterMap = { userId: user.id };
+  const filterTerms = { userId: user.id };
   const { data, before, after } = await todoService.getTodos({
     // search,
     // sort,
     // pagination,
-    filterMap,
+    filterTerms,
   });
 
   return data;

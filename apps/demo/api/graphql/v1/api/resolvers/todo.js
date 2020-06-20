@@ -8,17 +8,17 @@ async function todos(root, args, session) {
 
   console.log({ search, sort, pagination, filterBy });
 
-  const filterMap = search
+  const filterTerms = search
     ? { fuzzySearch: search, ...filterBy }
     : { ...filterBy };
 
-  console.log({ filterMap });
+  console.log({ filterTerms });
 
   const { data, before, after } = await todoService.getTodos({
     search,
     sort,
     pagination,
-    filterMap,
+    filterTerms,
   });
 
   console.log({ todos });
