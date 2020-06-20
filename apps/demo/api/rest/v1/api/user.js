@@ -28,11 +28,8 @@ async function getUsers(req, res) {
     const filterTerms = { ...filterBy, fuzzySearch: search };
 
     // TX:
-    const { data, before, after } = await userService.getUsers({
-      sort,
-      pagination,
-      filterTerms,
-    });
+    const options = { sort, pagination, filterTerms };
+    const { data, before, after } = await userService.getUsers(options);
 
     // RESP:
     res.json({ data, meta: { before, after } });
