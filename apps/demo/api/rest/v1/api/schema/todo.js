@@ -1,5 +1,5 @@
 const Joi = require("@hapi/joi");
-const { PaginationOptions } = require("./common");
+const { PaginationOptions, FilterOptions } = require("./common");
 
 const CreateTodoInput = Joi.object({
   title: Joi.string().min(3).max(30).required(),
@@ -13,16 +13,13 @@ const UpdateTodoInput = Joi.object({
   userId: Joi.string().required(),
 });
 
-const TodoFilterOptions = Joi.object({
-  title: Joi.string(),
-  userId: Joi.string(),
-  isActive: Joi.boolean(),
-});
+const FILTER_OPTIONS = ["title", "userId", "isActive"];
+const SORT_OPTIONS = ["title", "viewCount", "updatedTs"];
 
 const GetTodosInput = Joi.object({
-  filterBy: TodoFilterOptions,
+  filters: FilterOptions(FILTER_OPTIONS),
   search: Joi.string(),
-  sort: Joi.string().valid("title", "viewCount", "updatedTs"),
+  sort: Joi.string().valid(...SORT_OPTIONS),
   ...PaginationOptions,
 });
 

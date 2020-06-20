@@ -6,12 +6,12 @@ const arrToMap = (items = []) =>
     return res;
   }, {});
 
-const strToObj = (str) => {
+const parseStr = (str) => {
   try {
-    return str ? JSON.parse(str) : {};
+    return str ? JSON.parse(str) : null;
   } catch {
     return {};
   }
 };
 
-module.exports = { arrToMap, strToObj };
+module.exports = { arrToMap, parseStr };

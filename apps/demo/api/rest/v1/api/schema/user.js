@@ -1,5 +1,5 @@
 const Joi = require("@hapi/joi");
-const { PaginationOptions } = require("./common");
+const { PaginationOptions, FilterOptions } = require("./common");
 
 const CreateUserInput = Joi.object({
   name: Joi.string().min(3).max(30).required(),
@@ -20,16 +20,13 @@ const UpdateUserInput = Joi.object({
   isActive: Joi.boolean(),
 });
 
-const UserFilterOptions = Joi.object({
-  sex: Joi.string(),
-  role: Joi.string(),
-  isActive: Joi.boolean(),
-});
+const FILTER_OPTIONS = ["sex", "role", "isActive"];
+const SORT_OPTIONS = ["name", "username", "updatedTs"];
 
 const GetUsersInput = Joi.object({
-  filterBy: UserFilterOptions,
+  filters: FilterOptions(FILTER_OPTIONS),
   search: Joi.string(),
-  sort: Joi.string().valid("name", "username", "updatedTs"),
+  sort: Joi.string().valid(...SORT_OPTIONS),
   ...PaginationOptions,
 });
 

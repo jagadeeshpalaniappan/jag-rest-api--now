@@ -4,7 +4,10 @@ var router = require("express").Router();
 const { check, validationResult } = require("express-validator");
 
 const todoService = require("../../../../modules/todo/todo.service");
-const { strToObj } = require("../../../../modules/common/utils/all.utils");
+const {
+  parseStr,
+  arrToMap,
+} = require("../../../../modules/common/utils/all.utils");
 const {
   GetTodosInput,
   CreateTodoInput,
@@ -18,12 +21,13 @@ async function getTodos(req, res) {
     // VALIDATE:
     const { value: input, error } = await GetTodosInput.validate({
       ...req.query,
-      filterBy: strToObj(req.query.filterBy),
+      filters: parseStr(req.query.filters) || [],
     });
     if (error) res.status(400).json({ error });
 
     // POPULATE:
-    const { search, sort, pageSize, pageBefore, pageAfter, filterBy } = input;
+    const { search, sort, pageSize, pageBefore, pageAfter, filters } = input;
+    const filterBy = arrToMap(filters);
     const pagination = { size: pageSize, before: pageBefore, after: pageAfter };
     const filterTerms = { ...filterBy, fuzzySearch: search };
 
