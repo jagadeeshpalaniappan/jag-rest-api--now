@@ -23,7 +23,6 @@ const typeDefs = gql`
     phone: String
     sex: String
     role: String
-    isActive: Boolean
   }
 
   input UpdateUserInput {
