@@ -18,7 +18,7 @@ async function getUsers(req, res) {
     // VALIDATE:
     const { value: input, error } = await GetUsersInput.validate({
       ...req.query,
-      filterBy: strToObj(req.query.filterBy), // strToJSON
+      filterBy: strToObj(req.query.filterBy),
     });
     if (error) res.status(400).json({ error });
 
@@ -36,10 +36,8 @@ async function getUsers(req, res) {
 
     // RESP:
     res.json({ data, meta: { before, after } });
-  } catch (err) {
-    console.error(err);
-    const { name, message, description } = err || {};
-    res.status(500).json({ errors: [{ name, message, description }] });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 }
 
@@ -50,9 +48,8 @@ async function getUser(req, res) {
 
     // RESP:
     res.json({ user });
-  } catch (err) {
-    const { name, message, description } = err || {};
-    res.status(500).json({ error: { name, message, description } });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 }
 
@@ -71,8 +68,8 @@ async function createUser(req, res) {
         ? createdUsers[0]
         : createdUsers;
     res.json(output);
-  } catch (err) {
-    res.status(500).json({ error: err });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 }
 
@@ -88,31 +85,27 @@ async function updateUser(req, res) {
 
     // RESP:
     res.json({ user: updatedUser });
-  } catch (err) {
-    res.status(500).json({ error: err });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 }
 
 async function deleteAllUser(req, res) {
   try {
-    const user = await userService.deleteAllUser();
-    res.json({ user });
-  } catch (err) {
-    const { name, message, description } = err || {};
-    res.status(500);
-    res.json({ error: { name, message, description } });
+    const deletedUsers = await userService.deleteAllUser();
+    res.json({ users: deletedUsers });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 }
 
 async function deleteUser(req, res) {
   try {
     const { id } = req.params;
-    const user = await userService.deleteUser({ id });
-    res.json({ user });
-  } catch (err) {
-    const { name, message, description } = err || {};
-    res.status(500);
-    res.json({ error: { name, message, description } });
+    const deletedUser = await userService.deleteUser({ id });
+    res.json({ user: deletedUser });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 }
 
