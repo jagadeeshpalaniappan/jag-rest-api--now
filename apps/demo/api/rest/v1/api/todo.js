@@ -66,8 +66,8 @@ async function createTodo(req, res) {
     // RESP:
     const output =
       createdTodos && createdTodos.length === 1
-        ? createdTodos[0]
-        : createdTodos;
+        ? { todo: createdTodos[0] }
+        : { todos: createdTodos };
     res.json(output);
   } catch (error) {
     res.status(500).json({ error });

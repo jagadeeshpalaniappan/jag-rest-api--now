@@ -60,14 +60,17 @@ async function createUser(req, res) {
     const { value: user, error } = await CreateUserInput.validate(req.body);
     if (error) res.status(400).json({ error });
 
+    // POPULATE:
+    const newUser = { ...user, isActive: true };
+
     // TX:
-    const createdUsers = await userService.createUsers({ users: [user] }); // bulkCreate
+    const createdUsers = await userService.createUsers({ users: [newUser] }); // bulkCreate
 
     // RESP:
     const output =
       createdUsers && createdUsers.length === 1
-        ? createdUsers[0]
-        : createdUsers;
+        ? { user: createdUsers[0] }
+        : { users: createdUsers };
     res.json(output);
   } catch (error) {
     res.status(500).json({ error });

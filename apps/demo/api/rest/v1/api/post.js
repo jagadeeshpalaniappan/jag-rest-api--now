@@ -66,8 +66,8 @@ async function createPost(req, res) {
     // RESP:
     const output =
       createdPosts && createdPosts.length === 1
-        ? createdPosts[0]
-        : createdPosts;
+        ? { post: createdPosts[0] }
+        : { posts: createdPosts };
     res.json(output);
   } catch (error) {
     res.status(500).json({ error });
