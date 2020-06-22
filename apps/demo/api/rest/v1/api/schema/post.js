@@ -13,6 +13,7 @@ const UpdatePostInput = Joi.object({
   body: Joi.string(),
   viewCount: Joi.string(),
   userId: Joi.string().required(),
+  isActive: Joi.boolean(),
 });
 
 const FILTER_OPTIONS = ["title", "userId", "isActive"];

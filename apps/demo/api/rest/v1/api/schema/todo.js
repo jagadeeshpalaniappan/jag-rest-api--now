@@ -11,6 +11,7 @@ const UpdateTodoInput = Joi.object({
   title: Joi.string().min(3).max(30),
   description: Joi.string(),
   userId: Joi.string().required(),
+  isActive: Joi.boolean(),
 });
 
 const FILTER_OPTIONS = ["title", "userId", "isActive"];

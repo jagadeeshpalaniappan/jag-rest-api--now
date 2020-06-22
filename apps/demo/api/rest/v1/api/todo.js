@@ -61,7 +61,10 @@ async function createTodo(req, res) {
     if (error) res.status(400).json({ error });
 
     // TX:
-    const createdTodos = await todoService.createTodos({ todos: [todo] }); // bulkCreate
+    const createdTodos = await todoService.createTodos({
+      todos: [todo],
+      isActive: true,
+    }); // bulkCreate
 
     // RESP:
     const output =

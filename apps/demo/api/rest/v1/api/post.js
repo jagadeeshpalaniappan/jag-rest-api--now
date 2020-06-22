@@ -61,7 +61,10 @@ async function createPost(req, res) {
     if (error) res.status(400).json({ error });
 
     // TX:
-    const createdPosts = await postService.createPosts({ posts: [post] }); // bulkCreate
+    const createdPosts = await postService.createPosts({
+      posts: [post],
+      isActive: true,
+    }); // bulkCreate
 
     // RESP:
     const output =
