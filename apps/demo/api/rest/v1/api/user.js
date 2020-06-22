@@ -33,6 +33,8 @@ async function getUsers(req, res) {
 
     // TX:
     const options = { sort, pagination, filterTerms };
+    console.log({ options });
+
     const { data, before, after } = await userService.getUsers(options);
 
     // RESP:

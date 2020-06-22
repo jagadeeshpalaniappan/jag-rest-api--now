@@ -24,9 +24,15 @@ const getIndexName = (sort) => {
 };
 
 const getSearchValues = (filterTerms) => {
-  return SEARCH_TERMS.map(
-    (terms) => (filterTerms && filterTerms[terms]) || "*"
-  );
+  return SEARCH_TERMS.map((terms) => {
+    if (
+      filterTerms &&
+      filterTerms[terms] !== undefined &&
+      filterTerms[terms] !== null
+    )
+      return filterTerms[terms];
+    else return "*";
+  });
 };
 
 const getUsersAdvFql = ({ sort, pagination, filterTerms }) => {
